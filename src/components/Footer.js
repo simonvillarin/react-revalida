@@ -8,6 +8,7 @@ const style = {
   padding: "0.5rem",
   color: "rgba(255, 255, 255)",
   backgroundColor: "#ff4c4c",
+  textAlign: "center",
 };
 
 const Footer = () => {

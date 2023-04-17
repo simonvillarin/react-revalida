@@ -1,12 +1,24 @@
-import { AppBar, Container, Stack, Toolbar, Typography } from "@mui/material";
-import { SlUser } from "react-icons/sl";
+import React, { useContext } from "react";
+import { AppBar, Container, Toolbar, Typography, Box } from "@mui/material";
+import { SlUser, SlMagnifier, SlMenu, SlClose } from "react-icons/sl";
 import Search from "./Search";
-import React from "react";
+import { useNavigate } from "react-router-dom";
+import MobileNav from "./MobileNav";
+import MobileSearch from "./MobileSearch";
+import { AppbarContext } from "../context/AppbarContext";
 
 const navLinks = [
   {
     name: "HOME",
     to: "/",
+  },
+  {
+    name: "MOVIES",
+    to: "/movies",
+  },
+  {
+    name: "TV SERIES",
+    to: "/series",
   },
   {
     name: "MY LIST",
@@ -15,47 +27,68 @@ const navLinks = [
 ];
 
 const Appbar = () => {
+  const {
+    showMobileNav,
+    setShowMobileNav,
+    showMobileSearch,
+    setShowMobileSearch,
+  } = useContext(AppbarContext);
+  const navigate = useNavigate();
+
   return (
     <AppBar elevation={0} sx={{ color: "#f3f3f3" }}>
       <Toolbar>
         <Container>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            sx={{ gap: "2rem" }}
-          >
-            <Stack
-              direction="row"
-              justifyContent="center"
-              alignItems="center"
-              sx={{ gap: "2rem" }}
-            >
-              <Typography variant="h6">LOGO</Typography>
-              {navLinks.map((link, index) => (
-                <Typography key={index} sx={{ cursor: "pointer" }}>
-                  {link.name}
-                </Typography>
-              ))}
-            </Stack>
-            <Stack
-              direction="row"
-              justifyContent="center"
-              alignItems="center"
-              sx={{ gap: "1.5rem" }}
-            >
+          <Box className="nav">
+            <MobileNav />
+            <MobileSearch />
+            <Box className="menu-icon">
+              {!showMobileNav ? (
+                <SlMenu onClick={() => setShowMobileNav(true)} />
+              ) : (
+                <SlClose
+                  id="close-icon"
+                  onClick={() => setShowMobileNav(false)}
+                />
+              )}
+            </Box>
+            <Box className="left-nav">
+              <Typography variant="h6" sx={{ cursor: "pointer" }}>
+                LOGO
+              </Typography>
+              <Box className="nav-links">
+                {navLinks.map((link, index) => (
+                  <Typography
+                    key={index}
+                    sx={{ cursor: "pointer" }}
+                    onClick={() => navigate(link.to)}
+                  >
+                    {link.name}
+                  </Typography>
+                ))}
+              </Box>
+            </Box>
+            <Box className="right-nav">
               <Search />
-              <Stack
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-                sx={{ gap: "0.5rem" }}
-              >
+              <Box className="profile">
                 <SlUser style={{ cursor: "pointer" }} />
-                <Typography sx={{ cursor: "pointer" }}>Login</Typography>
-              </Stack>
-            </Stack>
-          </Stack>
+                <Typography variant="body2" sx={{ cursor: "pointer" }}>
+                  Simon James
+                </Typography>
+              </Box>
+            </Box>
+            <Box className="nav-icons">
+              <SlMagnifier
+                onClick={() => {
+                  if (showMobileNav) {
+                    setShowMobileNav(false);
+                  }
+                  setShowMobileSearch(!showMobileSearch);
+                }}
+              />
+              <SlUser />
+            </Box>
+          </Box>
         </Container>
       </Toolbar>
     </AppBar>
