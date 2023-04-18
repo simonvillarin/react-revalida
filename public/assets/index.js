@@ -1096,7 +1096,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect5(create, deps) {
+          function useEffect6(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1878,7 +1878,7 @@
           exports.useContext = useContext14;
           exports.useDebugValue = useDebugValue4;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect5;
+          exports.useEffect = useEffect6;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect3;
@@ -33243,9 +33243,25 @@ Please use another name.` : formatMuiErrorMessage(18));
   }
 
   // src/components/Card.js
-  var Card = ({ poster, title, rating }) => {
+  var Card = ({ id, poster, title }) => {
     const [isFillColor, setIsFillColor] = (0, import_react16.useState)(false);
-    return /* @__PURE__ */ import_react16.default.createElement("div", { className: "card" }, /* @__PURE__ */ import_react16.default.createElement("div", { className: "card-image" }, /* @__PURE__ */ import_react16.default.createElement("div", { className: "card-icons" }, isFillColor ? /* @__PURE__ */ import_react16.default.createElement(AiFillHeart, { onClick: () => setIsFillColor(false) }) : /* @__PURE__ */ import_react16.default.createElement(AiOutlineHeart, { onClick: () => setIsFillColor(true) })), /* @__PURE__ */ import_react16.default.createElement("img", { src: `${ORIGINAL_IMG}${poster}`, alt: title })), /* @__PURE__ */ import_react16.default.createElement("div", { className: "card-content" }, /* @__PURE__ */ import_react16.default.createElement("div", null, /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "body2", className: "card-title" }, title))));
+    const [favorite, setFavorite] = (0, import_react16.useState)({
+      id: 0,
+      img: "",
+      title: ""
+    });
+    (0, import_react16.useEffect)(() => {
+      console.log(favorite);
+    }, [favorite]);
+    return /* @__PURE__ */ import_react16.default.createElement("div", { className: "card" }, /* @__PURE__ */ import_react16.default.createElement("div", { className: "card-image" }, /* @__PURE__ */ import_react16.default.createElement("div", { className: "card-icons" }, isFillColor ? /* @__PURE__ */ import_react16.default.createElement(AiFillHeart, { onClick: () => setIsFillColor(false) }) : /* @__PURE__ */ import_react16.default.createElement(
+      AiOutlineHeart,
+      {
+        onClick: () => {
+          setFavorite({ ...favorite, id, img: poster, title });
+          setIsFillColor(true);
+        }
+      }
+    )), /* @__PURE__ */ import_react16.default.createElement("img", { src: `${ORIGINAL_IMG}${poster}`, alt: title })), /* @__PURE__ */ import_react16.default.createElement("div", { className: "card-content" }, /* @__PURE__ */ import_react16.default.createElement("div", null, /* @__PURE__ */ import_react16.default.createElement(Typography_default, { variant: "body2", className: "card-title" }, title))));
   };
   var Card_default = Card;
 
@@ -35428,7 +35444,7 @@ Please use another name.` : formatMuiErrorMessage(18));
     const [showPassword, setShowPassword] = (0, import_react20.useState)(false);
     const [confirmPassword, setConfirmPassword] = (0, import_react20.useState)("");
     const navigate = useNavigate();
-    return /* @__PURE__ */ import_react20.default.createElement(Box_default, { className: "container" }, /* @__PURE__ */ import_react20.default.createElement(Box_default, { className: "custom-shape-divider-top" }, /* @__PURE__ */ import_react20.default.createElement(
+    return /* @__PURE__ */ import_react20.default.createElement(Box_default, { className: "container sign-up-wrapper" }, /* @__PURE__ */ import_react20.default.createElement(Box_default, { className: "custom-shape-divider-top" }, /* @__PURE__ */ import_react20.default.createElement(
       "svg",
       {
         "data-name": "Layer 1",
@@ -35585,6 +35601,7 @@ Please use another name.` : formatMuiErrorMessage(18));
       Card_default,
       {
         key: index,
+        id: show.id,
         poster: show.poster_path || show.backdrop_path,
         title: show.title || show.name,
         rating: show.vote_average - 2

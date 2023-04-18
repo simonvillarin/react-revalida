@@ -14,7 +14,7 @@ const SignUpForm = () => {
   const navigate = useNavigate();
 
   return (
-    <Box className="container">
+    <Box className="container sign-up-wrapper">
       <Box className="custom-shape-divider-top">
         <svg
           data-name="Layer 1"

@@ -14,6 +14,7 @@ const Trending = () => {
         {trending.map((show, index) => (
           <Card
             key={index}
+            id={show.id}
             poster={show.poster_path || show.backdrop_path}
             title={show.title || show.name}
             rating={show.vote_average - 2}
